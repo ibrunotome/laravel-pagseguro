@@ -34,21 +34,21 @@ class NotificationController extends Controller
             return;
         }
         
+        $notification = new Notification($code, $type);
+
         try {
             $credential = new PagSeguroCredentials(
                 \config('laravelpagseguro.credentials.token'),
                 \config('laravelpagseguro.credentials.email')
             );
             
-            $notification = new Notification($code, $type);
             $info = $notification->check($credential);
         } catch (\RuntimeException $exception) {
             $credential = new PagSeguroCredentials(
-                \config('laravelpagseguro.credentials_old.email'),
-                \config('laravelpagseguro.credentials_old.token')
+                \config('laravelpagseguro.credentials_old.token'),
+                \config('laravelpagseguro.credentials_old.email')
             );
             
-            $notification = new Notification($code, $type);
             $info = $notification->check($credential);
         }
 
