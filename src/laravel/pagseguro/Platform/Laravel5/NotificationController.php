@@ -28,16 +28,30 @@ class NotificationController extends Controller
         $platform = Config::getPlatform();
         $code = \request()->input('notificationCode');
         $type = \request()->input('notificationType');
+        
         if (empty($code) || empty($type)) {
             $platform->abort();
             return;
         }
-        $credential = new PagSeguroCredentials(
-            \config('laravelpagseguro.credentials.token'),
-            \config('laravelpagseguro.credentials.email')
-        );
-        $notification = new Notification($code, $type);
-        $info = $notification->check($credential);
+        
+        try {
+            $credential = new PagSeguroCredentials(
+                \config('laravelpagseguro.credentials.token'),
+                \config('laravelpagseguro.credentials.email')
+            );
+            
+            $notification = new Notification($code, $type);
+            $info = $notification->check($credential);
+        } catch (\RuntimeException $exception) {
+            $credential = new PagSeguroCredentials(
+                \config('laravelpagseguro.credentials_old.email'),
+                \config('laravelpagseguro.credentials_old.token')
+            );
+            
+            $notification = new Notification($code, $type);
+            $info = $notification->check($credential);
+        }
+
         $this->notify($info);
     }
 
