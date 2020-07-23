@@ -11,6 +11,11 @@ return [
         'email' => null,
         'token' => null,
     ],
+    
+    'credentials_old' => [
+        'email' => env('PAGSEGURO_EMAIL_OLD'),
+        'token' => env('PAGSEGURO_TOKEN_OLD'),
+    ],
 
     /*
      * Informe abaixo o nome / url das rotas de aplicação para notificações
