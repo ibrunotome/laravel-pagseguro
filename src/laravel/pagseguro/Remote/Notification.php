@@ -32,6 +32,16 @@ class Notification extends ConsumerAbstract
         $request = $this->getRequest();
         $credentialData = $this->getCredentialData($credential);
         $response = $request->get($completeUrl, $credentialData);
+
+        if (!$response) {
+            $credentialData = [
+                'email' => config('laravelpagseguro.credentials_old.email'),
+                'token' => config('laravelpagseguro.credentials_old.token'),
+            ];
+
+            $response = $request->get($completeUrl, $credentialData);
+        }
+
         if (!$response) {
             throw new \RuntimeException('Notification check failure');
         }
