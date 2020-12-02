@@ -2,6 +2,7 @@
 
 namespace laravel\pagseguro\Notification;
 
+use Illuminate\Support\Facades\Log;
 use laravel\pagseguro\Complements\DataHydratorTrait\DataHydratorTrait;
 use laravel\pagseguro\Complements\DataHydratorTrait\DataHydratorConstructorTrait;
 use laravel\pagseguro\Complements\ValidateTrait;
@@ -107,6 +108,9 @@ class Notification implements NotificationInterface
         $type = $this->getNotificationType();
         $remote = new RemoteNotification();
         $data = $remote->$type($this->getNotificationCode(), $credentials);
+        
+        Log::debug($data);
+        
         $factoryBase = '\laravel\pagseguro\%s\Information\InformationFactory';
         $factoryClass = sprintf($factoryBase, ucfirst($type));
         $factory = new $factoryClass($data);
