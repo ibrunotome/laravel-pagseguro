@@ -52,5 +52,6 @@ class CreditCard extends MethodAbstract implements CreditCardInterface
         self::AVISTA => 'Avista',
         self::GRANDCARD => 'GRANDCARD',
         self::SOROCRED => 'Sorocred',
+        self::PIX => 'Pix',
     ];
 }
