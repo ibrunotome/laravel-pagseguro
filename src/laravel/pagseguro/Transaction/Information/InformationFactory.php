@@ -85,7 +85,7 @@ class InformationFactory extends InformationAbstractFactory
         try {
             $data = $this->data['paymentMethod'];
         } catch (\Exception $exception) {
-            $data['code'] = 102;
+            $data['code'] = 199;
             $data['type'] = $this->data['type'];
         }
         
