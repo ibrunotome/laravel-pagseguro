@@ -35,4 +35,5 @@ interface CreditCardInterface
     const AVISTA = 118;
     const GRANDCARD = 119;
     const SOROCRED = 120;
+    const PIX = 199;
 }
