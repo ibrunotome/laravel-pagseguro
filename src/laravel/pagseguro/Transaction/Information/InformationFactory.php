@@ -82,12 +82,17 @@ class InformationFactory extends InformationAbstractFactory
      */
     public function getPaymentMethod()
     {
-        $data = $this->data['paymentMethod'];
-        if (!array_key_exists('type', $data)
-            || !array_key_exists('code', $data)
-        ) {
+        try {
+            $data = $this->data['paymentMethod'];
+        } catch (\Exception $exception) {
+            $data['code'] = 102;
+            $data['type'] = $this->data['type'];
+        }
+        
+        if (!array_key_exists('type', $data) || !array_key_exists('code', $data)) {
             throw new \RuntimeException('Payment Method expected type and code');
         }
+        
         $method = MethodFactory::factory($data['type'], $data['code']);
         return $method;
     }
