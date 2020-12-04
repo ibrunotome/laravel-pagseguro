@@ -36,4 +36,5 @@ interface CreditCardInterface
     const GRANDCARD = 119;
     const SOROCRED = 120;
     const PIX = 199;
+    const DEBITO = 200;
 }
