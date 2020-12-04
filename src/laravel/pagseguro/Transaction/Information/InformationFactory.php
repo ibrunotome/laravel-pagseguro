@@ -92,6 +92,11 @@ class InformationFactory extends InformationAbstractFactory
         if (!array_key_exists('type', $data) || !array_key_exists('code', $data)) {
             throw new \RuntimeException('Payment Method expected type and code');
         }
+
+        if ((int)$data['type'] === 8) {
+            $data['type'] = 1;
+            $data['code'] = 200;
+        }
         
         $method = MethodFactory::factory($data['type'], $data['code']);
         return $method;
