@@ -93,9 +93,15 @@ class InformationFactory extends InformationAbstractFactory
             throw new \RuntimeException('Payment Method expected type and code');
         }
 
+        if ((int)$data['type'] === 11) {
+            $data['type'] = 1;
+            $data['code'] = 199; // Pix
+        }
+
+        // Cartão débito
         if ((int)$data['type'] === 8) {
             $data['type'] = 1;
-            $data['code'] = 200;
+            $data['code'] = 200; // Debito
         }
         
         $method = MethodFactory::factory($data['type'], $data['code']);
